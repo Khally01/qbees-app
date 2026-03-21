@@ -1,0 +1,63 @@
+{
+  "app_name": "Qbees",
+  "login": {
+    "title": "Нэвтрэх",
+    "phone_label": "Утасны дугаар",
+    "phone_placeholder": "+61 4XX XXX XXX",
+    "send_code": "Код илгээх",
+    "code_label": "Баталгаажуулах код",
+    "code_placeholder": "6 оронтой кодоо оруулна уу",
+    "verify": "Нэвтрэх",
+    "sending": "Илгээж байна...",
+    "verifying": "Шалгаж байна...",
+    "code_sent": "{{phone}} руу код илгээсэн",
+    "no_account": "Бүртгэл олдсонгүй. Админтай холбогдоно уу."
+  },
+  "tasks": {
+    "title": "Миний ажлууд",
+    "today": "Өнөөдөр",
+    "no_tasks": "Энэ өдөр ажил байхгүй",
+    "status": {
+      "pending": "Хүлээгдэж буй",
+      "assigned": "Томилогдсон",
+      "accepted": "Хүлээн зөвшөөрсөн",
+      "in_progress": "Хийгдэж байна",
+      "completed": "Дууссан",
+      "cancelled": "Цуцлагдсан"
+    },
+    "start": "Цэвэрлэгээ эхлэх",
+    "complete": "Дууссан гэж тэмдэглэх",
+    "accept": "Зөвшөөрөх",
+    "decline": "Татгалзах",
+    "photos": "Зурагнууд",
+    "add_photo": "Зураг нэмэх",
+    "notes": "Тэмдэглэл"
+  },
+  "admin": {
+    "title": "Хяналтын самбар",
+    "properties": "Байрнууд",
+    "cleaners": "Цэвэрлэгчид",
+    "create_task": "Ажил үүсгэх",
+    "schedule": "Хуваарь",
+    "total_tasks": "Нийт ажил",
+    "completed": "Дууссан",
+    "in_progress": "Хийгдэж байна",
+    "unassigned": "Томилогдоогүй"
+  },
+  "nav": {
+    "tasks": "Ажлууд",
+    "schedule": "Хуваарь",
+    "admin": "Админ",
+    "logout": "Гарах"
+  },
+  "common": {
+    "loading": "Ачааллаж байна...",
+    "error": "Алдаа гарлаа",
+    "save": "Хадгалах",
+    "cancel": "Цуцлах",
+    "back": "Буцах",
+    "date": "Огноо",
+    "time": "Цаг",
+    "property": "Байр"
+  }
+}

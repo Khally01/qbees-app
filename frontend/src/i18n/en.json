@@ -1,0 +1,63 @@
+{
+  "app_name": "Qbees",
+  "login": {
+    "title": "Sign In",
+    "phone_label": "Phone Number",
+    "phone_placeholder": "+61 4XX XXX XXX",
+    "send_code": "Send Code",
+    "code_label": "Verification Code",
+    "code_placeholder": "Enter 6-digit code",
+    "verify": "Sign In",
+    "sending": "Sending...",
+    "verifying": "Verifying...",
+    "code_sent": "Code sent to {{phone}}",
+    "no_account": "No account found. Contact your admin."
+  },
+  "tasks": {
+    "title": "My Tasks",
+    "today": "Today",
+    "no_tasks": "No tasks for this date",
+    "status": {
+      "pending": "Pending",
+      "assigned": "Assigned",
+      "accepted": "Accepted",
+      "in_progress": "In Progress",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "start": "Start Clean",
+    "complete": "Mark Complete",
+    "accept": "Accept",
+    "decline": "Decline",
+    "photos": "Photos",
+    "add_photo": "Add Photo",
+    "notes": "Notes"
+  },
+  "admin": {
+    "title": "Dashboard",
+    "properties": "Properties",
+    "cleaners": "Cleaners",
+    "create_task": "Create Task",
+    "schedule": "Schedule",
+    "total_tasks": "Total Tasks",
+    "completed": "Completed",
+    "in_progress": "In Progress",
+    "unassigned": "Unassigned"
+  },
+  "nav": {
+    "tasks": "Tasks",
+    "schedule": "Schedule",
+    "admin": "Admin",
+    "logout": "Sign Out"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "save": "Save",
+    "cancel": "Cancel",
+    "back": "Back",
+    "date": "Date",
+    "time": "Time",
+    "property": "Property"
+  }
+}
