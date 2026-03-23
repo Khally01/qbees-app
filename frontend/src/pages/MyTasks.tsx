@@ -56,19 +56,19 @@ export function MyTasks() {
   const isToday = formatDate(date) === formatDate(new Date());
 
   return (
-    <div style={{ paddingBottom: 80, minHeight: "100vh", background: "#f9fafb" }}>
+    <div style={{ paddingBottom: 80, minHeight: "100vh", background: "#FAF3E4" }}>
       {/* Header */}
       <div
         style={{
-          background: "#fbbf24",
+          background: "#2D2A24",
           padding: "20px 16px 16px",
           paddingTop: "max(20px, env(safe-area-inset-top))",
         }}
       >
-        <h1 style={{ margin: 0, fontSize: 22, fontWeight: 700 }}>
+        <h1 style={{ margin: 0, fontSize: 22, fontWeight: 700, color: "#FAF3E4" }}>
           {t("tasks.title")}
         </h1>
-        <p style={{ margin: "4px 0 0", fontSize: 14, opacity: 0.8 }}>
+        <p style={{ margin: "4px 0 0", fontSize: 14, opacity: 0.8, color: "#FAF3E4" }}>
           {user?.name}
         </p>
       </div>

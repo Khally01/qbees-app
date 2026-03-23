@@ -2,8 +2,8 @@ import { useTranslation } from "react-i18next";
 
 const STATUS_COLORS: Record<string, string> = {
   pending: "#f59e0b",
-  assigned: "#3b82f6",
-  accepted: "#8b5cf6",
+  assigned: "#DAC694",
+  accepted: "#998D6C",
   in_progress: "#f97316",
   completed: "#22c55e",
   cancelled: "#6b7280",

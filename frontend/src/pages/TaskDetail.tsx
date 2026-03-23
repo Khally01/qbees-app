@@ -80,11 +80,11 @@ export function TaskDetail() {
   const myAssignment = task.assignments.find((a) => a.user_id === user?.id);
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f9fafb" }}>
+    <div style={{ minHeight: "100vh", background: "#FAF3E4" }}>
       {/* Header */}
       <div
         style={{
-          background: "#fbbf24",
+          background: "#2D2A24",
           padding: "16px",
           paddingTop: "max(16px, env(safe-area-inset-top))",
           display: "flex",
@@ -94,12 +94,12 @@ export function TaskDetail() {
       >
         <button
           onClick={() => navigate(-1)}
-          style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}
+          style={{ background: "none", border: "none", cursor: "pointer", padding: 0, color: "#FAF3E4" }}
         >
           <ArrowLeft size={24} />
         </button>
         <div style={{ flex: 1 }}>
-          <h1 style={{ margin: 0, fontSize: 18, fontWeight: 700 }}>{task.name}</h1>
+          <h1 style={{ margin: 0, fontSize: 18, fontWeight: 700, color: "#FAF3E4" }}>{task.name}</h1>
         </div>
         <StatusBadge status={task.status} />
       </div>
@@ -192,8 +192,8 @@ export function TaskDetail() {
             style={{
               width: "100%",
               padding: 16,
-              background: "#f97316",
-              color: "#fff",
+              background: "#DAC694",
+              color: "#2D2A24",
               border: "none",
               borderRadius: 12,
               fontSize: 16,

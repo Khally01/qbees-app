@@ -50,16 +50,16 @@ export function Admin() {
   };
 
   return (
-    <div style={{ paddingBottom: 80, minHeight: "100vh", background: "#f9fafb" }}>
+    <div style={{ paddingBottom: 80, minHeight: "100vh", background: "#FAF3E4" }}>
       {/* Header */}
       <div
         style={{
-          background: "#fbbf24",
+          background: "#2D2A24",
           padding: "20px 16px 16px",
           paddingTop: "max(20px, env(safe-area-inset-top))",
         }}
       >
-        <h1 style={{ margin: 0, fontSize: 22, fontWeight: 700 }}>{t("admin.title")}</h1>
+        <h1 style={{ margin: 0, fontSize: 22, fontWeight: 700, color: "#FAF3E4" }}>{t("admin.title")}</h1>
       </div>
 
       {/* Stats */}
@@ -97,7 +97,7 @@ export function Admin() {
               padding: "10px 0",
               borderRadius: 8,
               border: "none",
-              background: tab === t_ ? "#fbbf24" : "#e5e7eb",
+              background: tab === t_ ? "#DAC694" : "#e5e7eb",
               fontWeight: tab === t_ ? 700 : 500,
               fontSize: 14,
               cursor: "pointer",
@@ -122,7 +122,7 @@ export function Admin() {
               style={{
                 width: "100%",
                 padding: 14,
-                background: "#fbbf24",
+                background: "#DAC694",
                 border: "none",
                 borderRadius: 10,
                 fontWeight: 700,
@@ -149,7 +149,7 @@ export function Admin() {
               style={{
                 width: "100%",
                 padding: 14,
-                background: "#fbbf24",
+                background: "#DAC694",
                 border: "none",
                 borderRadius: 10,
                 fontWeight: 700,
@@ -193,7 +193,7 @@ export function Admin() {
               style={{
                 width: "100%",
                 padding: 14,
-                background: "#fbbf24",
+                background: "#DAC694",
                 border: "none",
                 borderRadius: 10,
                 fontWeight: 700,
@@ -343,7 +343,7 @@ const labelStyle: React.CSSProperties = {
 const btnStyle: React.CSSProperties = {
   width: "100%",
   padding: 14,
-  background: "#fbbf24",
+  background: "#DAC694",
   border: "none",
   borderRadius: 8,
   fontWeight: 700,

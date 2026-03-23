@@ -16,7 +16,7 @@ export function TaskCard({ task }: { task: Task }) {
         marginBottom: 12,
         boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
         cursor: "pointer",
-        border: task.status === "in_progress" ? "2px solid #f97316" : "1px solid #e5e7eb",
+        border: task.status === "in_progress" ? "2px solid #DAC694" : "1px solid #e5e7eb",
       }}
     >
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start", marginBottom: 8 }}>

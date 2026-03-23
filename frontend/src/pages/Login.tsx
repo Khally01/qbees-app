@@ -51,7 +51,7 @@ export function Login() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        background: "linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)",
+        background: "linear-gradient(135deg, #2D2A24 0%, #3D3830 100%)",
         padding: 24,
       }}
     >
@@ -67,8 +67,7 @@ export function Login() {
       >
         {/* Logo */}
         <div style={{ textAlign: "center", marginBottom: 32 }}>
-          <div style={{ fontSize: 48, fontWeight: 800, color: "#fbbf24" }}>Q</div>
-          <h1 style={{ margin: 0, fontSize: 24, fontWeight: 700 }}>{t("app_name")}</h1>
+          <img src="/logo.svg" alt="Qbees" style={{ height: 80 }} />
           <p style={{ color: "#6b7280", margin: "4px 0 0" }}>{t("login.title")}</p>
         </div>
 
@@ -85,8 +84,8 @@ export function Login() {
                 padding: "4px 12px",
                 borderRadius: 6,
                 border: "1px solid #e5e7eb",
-                background: i18n.language === lng ? "#fbbf24" : "#fff",
-                color: i18n.language === lng ? "#000" : "#6b7280",
+                background: i18n.language === lng ? "#DAC694" : "#fff",
+                color: i18n.language === lng ? "#2D2A24" : "#6b7280",
                 fontWeight: i18n.language === lng ? 700 : 400,
                 cursor: "pointer",
                 fontSize: 13,
@@ -138,8 +137,8 @@ export function Login() {
               style={{
                 width: "100%",
                 padding: 14,
-                background: "#fbbf24",
-                color: "#000",
+                background: "#DAC694",
+                color: "#2D2A24",
                 border: "none",
                 borderRadius: 8,
                 fontSize: 16,
@@ -185,8 +184,8 @@ export function Login() {
               style={{
                 width: "100%",
                 padding: 14,
-                background: "#fbbf24",
-                color: "#000",
+                background: "#DAC694",
+                color: "#2D2A24",
                 border: "none",
                 borderRadius: 8,
                 fontSize: 16,
