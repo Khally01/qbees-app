@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import { ClipboardList, Calendar, Settings, LogOut } from "lucide-react";
+import { Calendar, Settings, LogOut, Home } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../lib/auth";
 
@@ -10,8 +10,8 @@ export function BottomNav() {
   const { isAdmin, logout } = useAuth();
 
   const items = [
-    { path: "/tasks", icon: ClipboardList, label: t("nav.tasks") },
-    ...(isAdmin ? [{ path: "/admin", icon: Settings, label: t("nav.admin") }] : []),
+    { path: "/tasks", icon: Calendar, label: "Schedule" },
+    ...(isAdmin ? [{ path: "/admin", icon: Settings, label: "Manage" }] : []),
   ];
 
   return (
@@ -21,12 +21,11 @@ export function BottomNav() {
         bottom: 0,
         left: 0,
         right: 0,
-        background: "#fff",
-        borderTop: "1px solid #E8DCC8",
+        background: "#2D2A24",
         display: "flex",
         justifyContent: "space-around",
-        padding: "8px 0",
-        paddingBottom: "max(8px, env(safe-area-inset-bottom))",
+        padding: "6px 0",
+        paddingBottom: "max(6px, env(safe-area-inset-bottom))",
         zIndex: 50,
       }}
     >
@@ -43,14 +42,14 @@ export function BottomNav() {
               gap: 2,
               background: "none",
               border: "none",
-              color: active ? "#DAC694" : "#6b7280",
-              fontSize: 11,
-              fontWeight: active ? 700 : 400,
+              color: active ? "#DAC694" : "#6B6560",
+              fontSize: 10,
+              fontWeight: active ? 700 : 500,
               cursor: "pointer",
-              padding: "4px 16px",
+              padding: "4px 20px",
             }}
           >
-            <item.icon size={22} />
+            <item.icon size={20} />
             {item.label}
           </button>
         );
@@ -67,14 +66,15 @@ export function BottomNav() {
           gap: 2,
           background: "none",
           border: "none",
-          color: "#6b7280",
-          fontSize: 11,
+          color: "#6B6560",
+          fontSize: 10,
+          fontWeight: 500,
           cursor: "pointer",
-          padding: "4px 16px",
+          padding: "4px 20px",
         }}
       >
-        <LogOut size={22} />
-        {t("nav.logout")}
+        <LogOut size={20} />
+        Sign Out
       </button>
     </nav>
   );
