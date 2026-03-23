@@ -54,10 +54,15 @@ async def seed_default_tenant():
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup: create tables and seed
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-    await seed_default_tenant()
+    # Startup: create tables and seed (non-blocking — don't crash the app if DB is unavailable)
+    try:
+        async with engine.begin() as conn:
+            await conn.run_sync(Base.metadata.create_all)
+        await seed_default_tenant()
+        print("Database initialized successfully")
+    except Exception as e:
+        print(f"WARNING: Database initialization failed: {e}")
+        print("App will start but database features won't work until the connection is fixed")
     yield
     # Shutdown
     await engine.dispose()
