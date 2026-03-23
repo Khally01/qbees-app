@@ -32,12 +32,23 @@ async def seed_default_tenant():
                 tenant_id=tenant.id,
                 name="Khally",
                 email="khally@qbees.com.au",
-                phone="+61400000000",  # Update with real number
+                phone="+61403701350",
                 role="admin",
                 language="en",
             )
             session.add(admin_user)
             await session.commit()
+            print(f"Seeded tenant '{tenant.name}' with admin user")
+        else:
+            # Ensure admin phone is up to date
+            result = await session.execute(
+                select(User).where(User.email == "khally@qbees.com.au", User.tenant_id == tenant.id)
+            )
+            admin_user = result.scalar_one_or_none()
+            if admin_user and admin_user.phone != "+61403701350":
+                admin_user.phone = "+61403701350"
+                await session.commit()
+                print("Updated admin phone number")
             print(f"Seeded tenant '{tenant.name}' with admin user")
 
 
