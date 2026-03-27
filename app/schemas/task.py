@@ -36,6 +36,7 @@ class TaskResponse(BaseModel):
     id: UUID
     property_id: UUID
     property_name: str | None = None
+    property_address: str | None = None
     name: str
     status: str
     scheduled_date: date

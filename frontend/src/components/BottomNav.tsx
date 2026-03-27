@@ -1,33 +1,26 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import { Calendar, Settings, LogOut, Home } from "lucide-react";
-import { useTranslation } from "react-i18next";
+import { CalendarDays, LayoutDashboard, Home, Users, LogOut } from "lucide-react";
 import { useAuth } from "../lib/auth";
 
 export function BottomNav() {
-  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const { isAdmin, logout } = useAuth();
 
   const items = [
-    { path: "/tasks", icon: Calendar, label: "Schedule" },
-    ...(isAdmin ? [{ path: "/admin", icon: Settings, label: "Manage" }] : []),
+    { path: "/jobs", icon: CalendarDays, label: "Jobs" },
+    ...(isAdmin
+      ? [
+          { path: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
+          { path: "/properties", icon: Home, label: "Properties" },
+          { path: "/bees", icon: Users, label: "Bees" },
+        ]
+      : []),
   ];
 
   return (
-    <nav
-      style={{
-        position: "fixed",
-        bottom: 0,
-        left: 0,
-        right: 0,
-        background: "#2D2A24",
-        display: "flex",
-        justifyContent: "space-around",
-        padding: "6px 0",
-        paddingBottom: "max(6px, env(safe-area-inset-bottom))",
-        zIndex: 50,
-      }}
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-qbees-dark flex justify-around py-1.5 z-50"
+      style={{ paddingBottom: "max(6px, env(safe-area-inset-bottom))" }}
     >
       {items.map((item) => {
         const active = location.pathname.startsWith(item.path);
@@ -35,19 +28,9 @@ export function BottomNav() {
           <button
             key={item.path}
             onClick={() => navigate(item.path)}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: 2,
-              background: "none",
-              border: "none",
-              color: active ? "#DAC694" : "#6B6560",
-              fontSize: 10,
-              fontWeight: active ? 700 : 500,
-              cursor: "pointer",
-              padding: "4px 20px",
-            }}
+            className={`flex flex-col items-center gap-0.5 px-3 py-1 border-0 bg-transparent text-[10px] cursor-pointer ${
+              active ? "text-qbees-gold font-bold" : "text-white/40"
+            }`}
           >
             <item.icon size={20} />
             {item.label}
@@ -55,26 +38,11 @@ export function BottomNav() {
         );
       })}
       <button
-        onClick={() => {
-          logout();
-          navigate("/login");
-        }}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: 2,
-          background: "none",
-          border: "none",
-          color: "#6B6560",
-          fontSize: 10,
-          fontWeight: 500,
-          cursor: "pointer",
-          padding: "4px 20px",
-        }}
+        onClick={() => { logout(); navigate("/login"); }}
+        className="flex flex-col items-center gap-0.5 px-3 py-1 border-0 bg-transparent text-[10px] text-white/40 cursor-pointer"
       >
         <LogOut size={20} />
-        Sign Out
+        Out
       </button>
     </nav>
   );

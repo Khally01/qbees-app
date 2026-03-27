@@ -91,13 +91,23 @@ class ApiClient {
   // Tasks
   listTasks(params?: {
     scheduled_date?: string;
+    date_from?: string;
+    date_to?: string;
     status?: string;
     property_id?: string;
+    search?: string;
+    sort_by?: string;
+    sort_dir?: string;
   }) {
     const searchParams = new URLSearchParams();
     if (params?.scheduled_date) searchParams.set("scheduled_date", params.scheduled_date);
+    if (params?.date_from) searchParams.set("date_from", params.date_from);
+    if (params?.date_to) searchParams.set("date_to", params.date_to);
     if (params?.status) searchParams.set("status", params.status);
     if (params?.property_id) searchParams.set("property_id", params.property_id);
+    if (params?.search) searchParams.set("search", params.search);
+    if (params?.sort_by) searchParams.set("sort_by", params.sort_by);
+    if (params?.sort_dir) searchParams.set("sort_dir", params.sort_dir);
     const qs = searchParams.toString();
     return this.request<Task[]>(`/api/v1/tasks/${qs ? `?${qs}` : ""}`);
   }
@@ -221,6 +231,7 @@ export interface Task {
   id: string;
   property_id: string;
   property_name: string | null;
+  property_address: string | null;
   name: string;
   status: string;
   scheduled_date: string;

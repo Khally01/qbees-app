@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+@theme {
+  --color-qbees-dark: #2D2A24;
+  --color-qbees-gold: #DAC694;
+  --color-qbees-cream: #FAF3E4;
+  --color-qbees-accent: #998D6C;
+  --color-qbees-bg: #F5F0E8;
+  --color-qbees-border: #E8DCC8;
+}
+
+html { height: -webkit-fill-available; }
+body {
+  font-family: 'Helvetica Neue', Helvetica, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  overscroll-behavior: none;
+  margin: 0;
+}

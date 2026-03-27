@@ -2,11 +2,12 @@ from datetime import date, datetime, timezone
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
-from sqlalchemy import select
+from sqlalchemy import select, or_
 from sqlalchemy.orm import selectinload
 
 from app.database import AsyncSession, get_db
 from app.middleware.auth import get_current_user, require_admin
+from app.models.property import Property
 from app.models.task import Task, TaskAssignment
 from app.models.user import User
 from app.schemas.task import (
@@ -25,6 +26,7 @@ def task_to_response(task: Task) -> TaskResponse:
         id=task.id,
         property_id=task.property_id,
         property_name=task.property.name if task.property else None,
+        property_address=task.property.address if task.property else None,
         name=task.name,
         status=task.status,
         scheduled_date=task.scheduled_date,
@@ -52,23 +54,33 @@ def task_to_response(task: Task) -> TaskResponse:
 @router.get("/", response_model=list[TaskResponse])
 async def list_tasks(
     scheduled_date: date | None = None,
+    date_from: date | None = None,
+    date_to: date | None = None,
     status_filter: str | None = Query(None, alias="status"),
     property_id: UUID | None = None,
     assigned_to: UUID | None = None,
+    search: str | None = None,
+    sort_by: str | None = None,
+    sort_dir: str | None = "asc",
     skip: int = 0,
-    limit: int = 100,
+    limit: int = 200,
     user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    """List tasks with optional filters."""
+    """List tasks with optional filters, date range, search, and sorting."""
     query = (
         select(Task)
         .where(Task.tenant_id == user.tenant_id)
         .options(selectinload(Task.property), selectinload(Task.assignments).selectinload(TaskAssignment.user), selectinload(Task.photos))
     )
 
+    # Date filters
     if scheduled_date:
         query = query.where(Task.scheduled_date == scheduled_date)
+    if date_from:
+        query = query.where(Task.scheduled_date >= date_from)
+    if date_to:
+        query = query.where(Task.scheduled_date <= date_to)
     if status_filter:
         query = query.where(Task.status == status_filter)
     if property_id:
@@ -76,11 +88,35 @@ async def list_tasks(
     if assigned_to:
         query = query.join(TaskAssignment).where(TaskAssignment.user_id == assigned_to)
 
+    # Text search across property name, task name, notes
+    if search:
+        query = query.join(Property, Task.property_id == Property.id, isouter=True).where(
+            or_(
+                Property.name.ilike(f"%{search}%"),
+                Task.name.ilike(f"%{search}%"),
+                Task.notes.ilike(f"%{search}%"),
+            )
+        )
+
     # Cleaners only see their own tasks
     if user.role == "cleaner":
         query = query.join(TaskAssignment, isouter=False).where(TaskAssignment.user_id == user.id)
 
-    query = query.order_by(Task.scheduled_date, Task.scheduled_time).offset(skip).limit(limit)
+    # Sorting
+    sort_column = {
+        "date": Task.scheduled_date,
+        "time": Task.scheduled_time,
+        "status": Task.status,
+        "name": Task.name,
+        "created": Task.created_at,
+    }.get(sort_by or "date", Task.scheduled_date)
+
+    if sort_dir == "desc":
+        query = query.order_by(sort_column.desc(), Task.scheduled_time)
+    else:
+        query = query.order_by(sort_column, Task.scheduled_time)
+
+    query = query.offset(skip).limit(limit)
 
     result = await db.execute(query)
     tasks = result.unique().scalars().all()
