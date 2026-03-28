@@ -169,22 +169,28 @@ class ApiClient {
     taskId: string,
     file: File,
     category?: string,
-  ): Promise<{ photo_id: string }> {
-    // Get presigned URL
-    const { upload_url, photo_id } = await this.getUploadUrl({
-      task_id: taskId,
-      filename: file.name,
-      category,
+  ): Promise<{ id: string; url: string }> {
+    // Direct upload to server (works with or without R2)
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("task_id", taskId);
+    if (category) formData.append("category", category);
+
+    const headers: Record<string, string> = {};
+    if (this.token) headers["Authorization"] = `Bearer ${this.token}`;
+
+    const res = await fetch(`${API_BASE}/api/v1/photos/upload`, {
+      method: "POST",
+      headers,
+      body: formData,
     });
 
-    // Upload directly to R2
-    await fetch(upload_url, {
-      method: "PUT",
-      body: file,
-      headers: { "Content-Type": file.type || "image/jpeg" },
-    });
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.detail || "Upload failed");
+    }
 
-    return { photo_id };
+    return res.json();
   }
 
   // Admin

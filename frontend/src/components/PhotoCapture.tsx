@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Camera, Upload, X } from "lucide-react";
+import { Camera, Upload, CheckCircle } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { api } from "../lib/api";
 
@@ -14,9 +14,12 @@ export function PhotoCapture({ taskId, category, onUploaded }: Props) {
   const fileRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [preview, setPreview] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
 
   const handleFile = async (file: File) => {
-    // Show preview
+    setError("");
+    setSuccess(false);
     const url = URL.createObjectURL(file);
     setPreview(url);
 
@@ -29,12 +32,15 @@ export function PhotoCapture({ taskId, category, onUploaded }: Props) {
     setUploading(true);
     try {
       await api.uploadPhoto(taskId, uploadFile, category);
+      setSuccess(true);
       onUploaded?.();
-    } catch (err) {
+      setTimeout(() => { setPreview(null); setSuccess(false); }, 1500);
+    } catch (err: any) {
       console.error("Upload failed:", err);
+      setError(err.message || "Upload failed");
+      setPreview(null);
     } finally {
       setUploading(false);
-      setPreview(null);
       URL.revokeObjectURL(url);
     }
   };
@@ -54,47 +60,24 @@ export function PhotoCapture({ taskId, category, onUploaded }: Props) {
         }}
       />
 
+      {error && (
+        <div className="text-red-600 text-sm mb-2 p-2 bg-red-50 rounded-lg">{error}</div>
+      )}
+
       {preview ? (
-        <div style={{ position: "relative", marginBottom: 12 }}>
-          <img src={preview} alt="Preview" style={{ width: "100%", borderRadius: 8, maxHeight: 200, objectFit: "cover" }} />
-          {uploading && (
-            <div
-              style={{
-                position: "absolute",
-                inset: 0,
-                background: "rgba(0,0,0,0.5)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: 8,
-                color: "#fff",
-                fontWeight: 600,
-              }}
-            >
-              <Upload size={24} className="spin" /> Uploading...
-            </div>
-          )}
+        <div className="relative mb-3 rounded-lg overflow-hidden">
+          <img src={preview} alt="Preview" className="w-full max-h-48 object-cover" />
+          <div className="absolute inset-0 bg-black/50 flex items-center justify-center text-white font-semibold">
+            {uploading && <><Upload size={24} className="animate-pulse mr-2" /> Uploading...</>}
+            {success && <><CheckCircle size={24} className="text-green-400 mr-2" /> Done!</>}
+          </div>
         </div>
       ) : (
         <button
           onClick={() => fileRef.current?.click()}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 8,
-            padding: "12px 20px",
-            background: "#DAC694",
-            color: "#2D2A24",
-            border: "none",
-            borderRadius: 8,
-            fontSize: 15,
-            fontWeight: 600,
-            cursor: "pointer",
-            width: "100%",
-            justifyContent: "center",
-          }}
+          className="flex items-center gap-2 px-5 py-3 bg-qbees-gold text-qbees-dark border-0 rounded-lg text-sm font-semibold cursor-pointer w-full justify-center hover:bg-qbees-gold/80 transition-colors"
         >
-          <Camera size={20} />
+          <Camera size={18} />
           {t("tasks.add_photo")}
         </button>
       )}
@@ -113,9 +96,7 @@ async function compressImage(file: File, maxWidth = 1920, quality = 0.8): Promis
       const ctx = canvas.getContext("2d")!;
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       canvas.toBlob(
-        (blob) => {
-          resolve(new File([blob!], file.name, { type: "image/jpeg" }));
-        },
+        (blob) => resolve(new File([blob!], file.name, { type: "image/jpeg" })),
         "image/jpeg",
         quality,
       );
