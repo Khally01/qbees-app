@@ -69,9 +69,20 @@ class ApiClient {
   }
 
   // Properties
-  listProperties(status?: string) {
-    const params = status ? `?status=${status}` : "";
-    return this.request<Property[]>(`/api/v1/properties/${params}`);
+  listProperties(params?: { status?: string; search?: string; sort_by?: string; sort_dir?: string }) {
+    const sp = new URLSearchParams();
+    if (params?.status) sp.set("status", params.status);
+    if (params?.search) sp.set("search", params.search);
+    if (params?.sort_by) sp.set("sort_by", params.sort_by);
+    if (params?.sort_dir) sp.set("sort_dir", params.sort_dir);
+    const qs = sp.toString();
+    return this.request<Property[]>(`/api/v1/properties/${qs ? `?${qs}` : ""}`);
+  }
+
+  getPropertyDetail(id: string) {
+    return this.request<{ property: Property; recent_tasks: any[]; stats: { total_tasks: number; completed_tasks: number } }>(
+      `/api/v1/properties/${id}/detail`
+    );
   }
 
   createProperty(data: Partial<Property>) {
@@ -222,6 +233,16 @@ export interface Property {
   notes: string | null;
   status: string;
   breezeway_id: string | null;
+  cleaning_instructions: string | null;
+  access_method: string | null;
+  access_code: string | null;
+  parking_instructions: string | null;
+  wifi_name: string | null;
+  wifi_password: string | null;
+  consumables: { name: string; qty: number }[] | null;
+  bedrooms: number | null;
+  bathrooms: number | null;
+  living_areas: number | null;
   created_at: string;
 }
 

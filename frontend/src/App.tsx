@@ -4,6 +4,8 @@ import { AppShell } from "./components/layout/AppShell";
 import { Login } from "./pages/Login";
 import { Jobs } from "./pages/Jobs";
 import { TaskDetail } from "./pages/TaskDetail";
+import { Properties } from "./pages/Properties";
+import { PropertyDetail } from "./pages/PropertyDetail";
 import { Admin } from "./pages/Admin";
 import { MyTasks } from "./pages/MyTasks";
 import "./i18n";
@@ -25,7 +27,8 @@ function AppRoutes() {
       <Route path="/jobs" element={<ProtectedRoute><AppShell><Jobs /></AppShell></ProtectedRoute>} />
       <Route path="/jobs/:id" element={<ProtectedRoute><AppShell><TaskDetail /></AppShell></ProtectedRoute>} />
       <Route path="/dashboard" element={<ProtectedRoute><AppShell><DashboardPlaceholder /></AppShell></ProtectedRoute>} />
-      <Route path="/properties" element={<ProtectedRoute><AppShell><PropertiesPlaceholder /></AppShell></ProtectedRoute>} />
+      <Route path="/properties" element={<ProtectedRoute><AppShell><Properties /></AppShell></ProtectedRoute>} />
+      <Route path="/properties/:id" element={<ProtectedRoute><AppShell><PropertyDetail /></AppShell></ProtectedRoute>} />
       <Route path="/bees" element={<ProtectedRoute><AppShell><BeesPlaceholder /></AppShell></ProtectedRoute>} />
 
       {/* Legacy routes — redirect */}
@@ -62,15 +65,6 @@ function DashboardPlaceholder() {
         ))}
       </div>
       <p className="text-sm text-qbees-accent mt-6">Dashboard stats coming in Phase 4.</p>
-    </div>
-  );
-}
-
-function PropertiesPlaceholder() {
-  return (
-    <div className="p-6">
-      <h1 className="text-xl font-bold text-qbees-dark mb-4">Properties</h1>
-      <p className="text-sm text-qbees-accent">Property management with data table coming in Phase 2.</p>
     </div>
   );
 }

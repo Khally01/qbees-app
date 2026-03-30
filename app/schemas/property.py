@@ -16,6 +16,16 @@ class PropertyCreate(BaseModel):
     owner_phone: str | None = None
     notes: str | None = None
     breezeway_id: str | None = None
+    cleaning_instructions: str | None = None
+    access_method: str | None = None
+    access_code: str | None = None
+    parking_instructions: str | None = None
+    wifi_name: str | None = None
+    wifi_password: str | None = None
+    consumables: list[dict] | None = None
+    bedrooms: int | None = None
+    bathrooms: int | None = None
+    living_areas: int | None = None
 
 
 class PropertyUpdate(BaseModel):
@@ -30,6 +40,16 @@ class PropertyUpdate(BaseModel):
     owner_phone: str | None = None
     notes: str | None = None
     status: str | None = None
+    cleaning_instructions: str | None = None
+    access_method: str | None = None
+    access_code: str | None = None
+    parking_instructions: str | None = None
+    wifi_name: str | None = None
+    wifi_password: str | None = None
+    consumables: list[dict] | None = None
+    bedrooms: int | None = None
+    bathrooms: int | None = None
+    living_areas: int | None = None
 
 
 class PropertyResponse(BaseModel):
@@ -46,6 +66,16 @@ class PropertyResponse(BaseModel):
     notes: str | None
     status: str
     breezeway_id: str | None
+    cleaning_instructions: str | None = None
+    access_method: str | None = None
+    access_code: str | None = None
+    parking_instructions: str | None = None
+    wifi_name: str | None = None
+    wifi_password: str | None = None
+    consumables: list[dict] | None = None
+    bedrooms: int | None = None
+    bathrooms: int | None = None
+    living_areas: int | None = None
     created_at: datetime
 
     model_config = {"from_attributes": True}
