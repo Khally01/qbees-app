@@ -1,4 +1,5 @@
 import asyncio
+import os
 from logging.config import fileConfig
 
 from alembic import context
@@ -11,6 +12,14 @@ from app.models import *  # noqa: F401,F403 — register all models
 config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
+
+# Override sqlalchemy.url from DATABASE_URL env var (Railway, etc.)
+database_url = os.environ.get("DATABASE_URL")
+if database_url:
+    # Railway uses postgres:// — SQLAlchemy needs postgresql+asyncpg://
+    database_url = database_url.replace("postgres://", "postgresql+asyncpg://", 1)
+    database_url = database_url.replace("postgresql://", "postgresql+asyncpg://", 1)
+    config.set_main_option("sqlalchemy.url", database_url)
 
 target_metadata = Base.metadata
 

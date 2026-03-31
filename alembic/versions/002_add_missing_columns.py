@@ -1,14 +1,14 @@
-"""Phase 2+3: Add property cleaning fields and user cleaner profile fields
+"""Add missing Phase 2+3 columns (fix for 001 which ran but skipped SQL)
 
-Revision ID: 001_phase2_phase3
-Revises:
+Revision ID: 002_add_missing_columns
+Revises: 001_phase2_phase3
 Create Date: 2026-03-31
 
 """
 from alembic import op
 
-revision = "001_phase2_phase3"
-down_revision = None
+revision = "002_add_missing_columns"
+down_revision = "001_phase2_phase3"
 branch_labels = None
 depends_on = None
 
