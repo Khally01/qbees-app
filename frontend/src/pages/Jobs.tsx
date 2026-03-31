@@ -85,7 +85,7 @@ export function Jobs() {
   // Load properties + cleaners for filter dropdowns
   useEffect(() => {
     api.listProperties().then(setProperties).catch(() => {});
-    if (isAdmin) api.listUsers("cleaner").then(setCleaners).catch(() => {});
+    if (isAdmin) api.listUsers({ role: "cleaner" }).then(setCleaners).catch(() => {});
   }, []);
 
   // Stats

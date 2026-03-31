@@ -205,16 +205,40 @@ class ApiClient {
   }
 
   // Admin
-  listUsers(role?: string) {
-    const params = role ? `?role=${role}` : "";
-    return this.request<User[]>(`/api/v1/admin/users${params}`);
+  listUsers(params?: { role?: string; search?: string; active_only?: boolean }) {
+    const q = new URLSearchParams();
+    if (params?.role) q.set("role", params.role);
+    if (params?.search) q.set("search", params.search);
+    if (params?.active_only) q.set("active_only", "true");
+    const qs = q.toString() ? `?${q.toString()}` : "";
+    return this.request<User[]>(`/api/v1/admin/users${qs}`);
   }
 
-  createUser(data: { name: string; phone?: string; role?: string; language?: string }) {
+  getUser(userId: string) {
+    return this.request<User>(`/api/v1/admin/users/${userId}`);
+  }
+
+  getUserStats(userId: string) {
+    return this.request<UserStats>(`/api/v1/admin/users/${userId}/stats`);
+  }
+
+  createUser(data: Partial<User> & { name: string }) {
     return this.request<User>("/api/v1/admin/users", {
       method: "POST",
       body: JSON.stringify(data),
     });
+  }
+
+  updateUser(userId: string, data: Partial<User>) {
+    return this.request<User>(`/api/v1/admin/users/${userId}`, {
+      method: "PATCH",
+      body: JSON.stringify(data),
+    });
+  }
+
+  // Dashboard
+  getDashboardStats() {
+    return this.request<DashboardStats>("/api/v1/dashboard/stats");
   }
 }
 
@@ -293,6 +317,39 @@ export interface User {
   role: string;
   language: string;
   is_active: boolean;
+  nickname: string | null;
+  address: string | null;
+  suburb: string | null;
+  transport: string | null;
+  skills: string[] | null;
+  regions: string[] | null;
+  notes: string | null;
+  start_date: string | null;
+  created_at: string | null;
+}
+
+export interface UserStats {
+  user: User;
+  stats: {
+    total_jobs: number;
+    completed_jobs: number;
+    completion_rate: number;
+    this_month: number;
+  };
+  recent_tasks: {
+    id: string;
+    name: string;
+    status: string;
+    scheduled_date: string;
+    completed_at: string | null;
+  }[];
+}
+
+export interface DashboardStats {
+  active_properties: number;
+  active_bees: number;
+  today: { total: number; completed: number; in_progress: number; unassigned: number; pending: number };
+  this_month: { total: number; completed: number; completion_rate: number };
 }
 
 export const api = new ApiClient();

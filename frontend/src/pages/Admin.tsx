@@ -47,7 +47,7 @@ export function Admin() {
       const [t, p, c] = await Promise.all([
         api.listTasks({ scheduled_date: formatDate(date) }),
         api.listProperties(),
-        api.listUsers("cleaner"),
+        api.listUsers({ role: "cleaner" }),
       ]);
       setTasks(t);
       setProperties(p);

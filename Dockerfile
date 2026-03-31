@@ -17,4 +17,4 @@ COPY alembic.ini .
 
 COPY --from=frontend-build /app/frontend/dist ./frontend/dist
 
-CMD uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}
+CMD alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}

@@ -11,7 +11,7 @@ from sqlalchemy import select
 from app.config import get_settings
 from app.database import engine, Base, async_session
 from app.models import Tenant, User  # noqa: F401 — ensure models are registered
-from app.api import auth, properties, tasks, photos, admin
+from app.api import auth, properties, tasks, photos, admin, dashboard
 
 settings = get_settings()
 
@@ -90,6 +90,7 @@ app.include_router(properties.router, prefix="/api/v1")
 app.include_router(tasks.router, prefix="/api/v1")
 app.include_router(photos.router, prefix="/api/v1")
 app.include_router(admin.router, prefix="/api/v1")
+app.include_router(dashboard.router, prefix="/api/v1")
 
 
 @app.get("/health")
